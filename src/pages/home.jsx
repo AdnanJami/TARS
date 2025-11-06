@@ -49,7 +49,7 @@ export default function TARSWebsite() {
             <div className="badge">Deep Learning Based Mobility System</div>
 
             <h1 id="hero-title" className="hero-title">TARS</h1>
-            <img src="src/assets/car.png" alt="Fallback flowchart" style={{ maxWidth: '100%', height: 'auto' }} />
+            <img src="/car.png" alt="Fallback flowchart" style={{ maxWidth: '100%', height: 'auto' }} />
             <h2 className="hero-subtitle">Smart Transport and Retrieval System</h2>
 
             <p className="hero-tagline">with Robotic Arm and Vision Based Object Detection</p>
@@ -130,7 +130,7 @@ export default function TARSWebsite() {
               ) : (
                 <div className="flowchart-fallback">
                   <p className="flowchart-fallback-title">System Flowchart Diagram</p>
-                  <img src="src/assets/Adobe Express - file.png" alt="Fallback flowchart" style={{ maxWidth: '100%', height: 'auto' }} />
+                  <img src="/Adobe Express - file.png" alt="Fallback flowchart" style={{ maxWidth: '100%', height: 'auto' }} />
                 </div>
               )}
             </div>
