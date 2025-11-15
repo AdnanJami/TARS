@@ -13,19 +13,92 @@ body {
 
 /* Hero Section */
 .hero {
-  min-height: 78vh; /* less aggressive on mobile than 100vh */
+  min-height: 78vh;
   display: flex; align-items: center; justify-content: center;
   text-align: center; position: relative; overflow: hidden;
-  padding: 40px ;
+  padding: 40px;
 }
 .hero::before {
   content: '';
   position: absolute; inset: 0;
-  background-image: url('/assets/grid-pattern.svg'); /* move base64 -> file */
+  background-image: url('/assets/grid-pattern.svg');
   opacity: 0.14; pointer-events: none;
 }
 
 .hero-content { position: relative; z-index: 1; padding: 12px; max-width: 920px; margin: 0 auto; }
+
+/* Navbar Container */
+.hero-navbar-container {
+  text-align: center;
+  padding: 30px 20px;
+  transition: all 0.4s ease;
+  position: relative;
+  z-index: 10;
+}
+
+.navbar-layout {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.hero-nav-title {
+  flex: 1;
+  text-align: center;
+}
+
+.hero-car-image {
+  max-width: 100%;
+  height: auto;
+  transition: all 0.4s ease;
+}
+
+.hero-navbar-container.sticky {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(10, 10, 10, 0.95);
+  backdrop-filter: blur(12px);
+  padding: 12px 20px;
+  z-index: 9999;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+}
+
+.hero-navbar-container.sticky .navbar-layout {
+  justify-content: center;
+  gap: 20px;
+}
+
+.hero-navbar-container.sticky .hero-car-image {
+  max-width: 50px;
+  height: auto;
+}
+
+.hero-navbar-container.sticky .hero-nav-title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.hero-navbar-container.sticky .hero-title {
+  font-size: 1.8rem;
+  margin: 0;
+}
+
+.hero-navbar-container.sticky .hero-subtitle {
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+.hero-navbar-container.sticky .hero-tagline {
+  font-size: 0.7rem;
+  margin: 0;
+}
 
 /* Badge */
 .badge {
@@ -90,14 +163,6 @@ section { padding: 56px 0; }
 .card-list-item { display:flex; gap:10px; align-items:flex-start; margin-bottom:12px; color:#d8eefe; font-size:0.98rem; line-height:1.45; }
 .checkmark { color:#4ade80; font-size:18px; margin-top:2px; }
 
-/* Step Cards */
-.step-card { padding:16px; border-radius:10px; border:1px solid rgba(59,130,246,0.06); background: rgba(255,255,255,0.02); transition: transform .15s ease; }
-.step-card:hover { transform: translateY(-6px); }
-.step-header { display:flex; align-items:center; gap:12px; margin-bottom:8px; }
-.step-number { width:44px; height:44px; border-radius:50%; background: rgba(34,211,238,0.12); border:2px solid rgba(34,211,238,0.18); display:flex; align-items:center; justify-content:center; color:#22d3ee; font-weight:700; }
-.step-icon { font-size:22px; }
-.step-title { font-weight:700; color:#dbeafe; }
-
 /* Metrics */
 .metric-card { padding:18px; border-radius:10px; text-align:center; background: rgba(8,145,178,0.06); border:1px solid rgba(34,211,238,0.06); }
 .metric-value { font-size:1.6rem; color:#22d3ee; font-weight:800; margin-bottom:6px; }
@@ -110,6 +175,80 @@ section { padding: 56px 0; }
 .flowchart-fallback { text-align:center; padding:18px; }
 .flowchart-fallback-title { color:#93c5fd; margin-bottom:8px; font-size:1rem; }
 .flowchart-fallback img { max-width:100%; height:auto; border-radius:6px; }
+
+/* Workflow Section */
+.workflow-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.workflow-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(34,211,238,0.06);
+  border-radius: 12px;
+  padding: 20px;
+  transition: transform .2s ease;
+}
+
+.workflow-step:hover {
+  transform: translateY(-4px);
+}
+
+.workflow-text {
+  flex: 1;
+  text-align: left;
+  color: #dbeafe;
+}
+
+.workflow-text h3 {
+  color: #22d3ee;
+  font-size: 1.25rem;
+  margin-bottom: 8px;
+}
+
+.workflow-text p {
+  color: rgba(191,219,254,0.85);
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+.workflow-img {
+  flex: 1;
+  text-align: center;
+}
+
+.workflow-img img {
+  max-width: 100%;
+  border-radius: 10px;
+  border: 1px solid rgba(59,130,246,0.06);
+  box-shadow: 0 4px 18px rgba(0,0,0,0.3);
+}
+
+/* Responsive layout */
+@media (min-width: 768px) {
+  .workflow-step {
+    flex-direction: row;
+  }
+  .workflow-step:nth-child(even) {
+    flex-direction: row-reverse;
+  }
+}
+
+.workflow-video {
+  margin-top: 50px;
+  text-align: center;
+}
+
+.workflow-video h3 {
+  color: #93c5fd;
+  margin-bottom: 14px;
+  font-size: 1.3rem;
+}
 
 /* Team styles */
 .team-item { margin-bottom:8px; color:#bfdbfe; font-weight:600; font-size:0.95rem; }
@@ -125,7 +264,17 @@ footer p { margin-bottom:6px; font-size:0.95rem; }
   .hero-title { font-size: 3rem; }
   .hero-subtitle { font-size: 1.15rem; }
   .hero { padding: 28px 0; min-height: 66vh; }
+  
+  .navbar-layout {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .hero-navbar-container.sticky .navbar-layout {
+    flex-direction: row;
+  }
 }
+
 @media (max-width: 520px) {
   .container { padding: 0 12px; }
   .hero-title { font-size: 2.3rem; }
@@ -133,9 +282,21 @@ footer p { margin-bottom:6px; font-size:0.95rem; }
   .card { padding: 14px; }
   .metric-value { font-size: 1.35rem; }
   .tech-badge { padding: 6px 10px; font-size: 13px; }
-  .step-number { width:40px; height:40px; font-size:14px; }
   .badge { font-size:12px; padding:6px 10px; }
+  
+  .hero-navbar-container.sticky .hero-title {
+    font-size: 1.3rem;
+  }
+  
+  .hero-navbar-container.sticky .hero-subtitle {
+    font-size: 0.7rem;
+  }
+  
+  .hero-navbar-container.sticky .hero-tagline {
+    font-size: 0.6rem;
+  }
 }
 
 /* small usability */
 a, button { touch-action: manipulation; -webkit-tap-highlight-color: rgba(255,255,255,0.06); }
+ 

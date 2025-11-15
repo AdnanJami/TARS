@@ -1,11 +1,24 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Camera, Target, TrendingUp, CheckCircle, Cpu, Package, ChevronDown } from 'lucide-react';
 import '../styles/home.css';
-
 export default function TARSWebsite() {
   const [scrollY, setScrollY] = useState(0);
   const [imgError, setImgError] = useState(false);
   const ticking = useRef(false);
+  const [isSticky, setIsSticky] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 200) {
+        setIsSticky(true);
+      } else {
+        setIsSticky(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   useEffect(() => {
     const onScroll = () => {
@@ -21,15 +34,6 @@ export default function TARSWebsite() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const steps = [
-    { num: 1, title: "Choosing the object", icon: "🎯" },
-    { num: 2, title: "Aligning toward the object", icon: "📷" },
-    { num: 3, title: "Approaching pick-up range", icon: "📦" },
-    { num: 4, title: "Claw picking up object", icon: "✓" },
-    { num: 5, title: "Transporting to start", icon: "📈" },
-    { num: 6, title: "Placing object down", icon: "✓" }
-  ];
-
   const metrics = [
     { label: "mAP@0.5", value: "0.987", desc: "Detection accuracy" },
     { label: "Training Epochs", value: "20", desc: "Model training cycles" },
@@ -39,36 +43,47 @@ export default function TARSWebsite() {
 
   return (
     <div>
+      {/* Sticky Navbar */}
+      <div className={`hero-navbar-container ${isSticky ? "sticky" : ""}`}>
+        {!isSticky && <div className="badge">Deep Learning Based Mobility System</div>}
+        
+        <div className="navbar-layout">
+          <h1 id="hero-title" className="hero-title" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} style={{ cursor: 'pointer' }}>TARS</h1>
+          
+          
+          <div className='hero-nav-title'>
+            <h2 className="hero-subtitle">Smart Transport and Retrieval System</h2>
+            <p className="hero-tagline">with Robotic Arm and Vision Based Object Detection</p>
+          </div>
+          <img src="/car.png" alt="TARS Robot" className="hero-car-image" />
+          
+        </div>
+
+        {!isSticky && 
+        <div className="tech-badges">
+          <div className="tech-badge">
+            <Cpu className="tech-badge-icon" />
+            <span>YOLOv5 Detection</span>
+          </div>
+          <div className="tech-badge">
+            <Camera className="tech-badge-icon" />
+            <span>Real-time Vision</span>
+          </div>
+          <div className="tech-badge">
+            <Package className="tech-badge-icon" />
+            <span>Autonomous Retrieval</span>
+          </div>
+        </div>
+        }
+      </div>
+
       <main>
         {/* Hero Section */}
         <div className="hero" role="region" aria-labelledby="hero-title">
           <div
             className="hero-content"
-            style={{ transform: `translateY(${scrollY * 0.18}px)` }} /* lower parallax for small screens */
+            style={{ transform: `translateY(${scrollY * 0.18}px)` }}
           >
-            <div className="badge">Deep Learning Based Mobility System</div>
-
-            <h1 id="hero-title" className="hero-title">TARS</h1>
-            <img src="/car.png" alt="Fallback flowchart" style={{ maxWidth: '100%', height: 'auto' }} />
-            <h2 className="hero-subtitle">Smart Transport and Retrieval System</h2>
-
-            <p className="hero-tagline">with Robotic Arm and Vision Based Object Detection</p>
-
-            <div className="tech-badges">
-              <div className="tech-badge">
-                <Cpu className="tech-badge-icon" />
-                <span>YOLOv5 Detection</span>
-              </div>
-              <div className="tech-badge">
-                <Camera className="tech-badge-icon" />
-                <span>Real-time Vision</span>
-              </div>
-              <div className="tech-badge">
-                <Package className="tech-badge-icon" />
-                <span>Autonomous Retrieval</span>
-              </div>
-            </div>
-
             <ChevronDown className="scroll-indicator" size={32} />
           </div>
         </div>
@@ -142,20 +157,97 @@ export default function TARSWebsite() {
           <div className="container">
             <h2 id="workflow" className="section-title">Operation Workflow</h2>
             <p className="section-description">
-              TARS performs a sequence of mechanical operations for object retrieval: scanning with 360° rotation,
-              centering the target, approaching within 10cm proximity, picking up, and transporting back to start position.
+              TARS executes a sequence of mechanical and vision-based operations to locate, align with,
+              and retrieve target objects autonomously. Each stage combines motion control and object detection.
             </p>
 
-            <div className="grid-3">
-              {steps.map((step, index) => (
-                <div key={index} className="step-card">
-                  <div className="step-header">
-                    <div className="step-number">{step.num}</div>
-                    <span className="step-icon">{step.icon}</span>
-                  </div>
-                  <h4 className="step-title">{step.title}</h4>
+            <div className="workflow-steps">
+              {/* Step 1 */}
+              <div className="workflow-step">
+                <div className="workflow-text">
+                  <h3>1. Choosing the Object</h3>
+                  <p>
+                    Using the YOLOv5 detection model, TARS identifies multiple objects in the scene and selects
+                    the target based on user-defined parameters or class priority.
+                  </p>
                 </div>
-              ))}
+                <div className="workflow-img">
+                  <img src="/User_interface-png.png" alt="Choosing the object" />
+                </div>
+              </div>
+
+              {/* Step 2 */}
+              <div className="workflow-step">
+                <div className="workflow-text">
+                  <h3>2. Aligning Toward the Object</h3>
+                  <p>
+                    The system adjusts its wheelbase orientation, ensuring the camera and arm are aligned directly
+                    with the detected object for optimal approach.
+                  </p>
+                </div>
+                <div className="workflow-img">
+                  <img src="/alligning_toward_object.png" alt="Aligning toward the object" />
+                </div>
+              </div>
+
+              {/* Step 3 */}
+              <div className="workflow-step">
+                <div className="workflow-text">
+                  <h3>3. Approaching Pick-Up Range</h3>
+                  <p>
+                    Once aligned, TARS drives forward until the object lies within a 10 cm range,
+                    preparing for the grasp operation using onboard distance sensors.
+                  </p>
+                </div>
+                <div className="workflow-img">
+                  <img src="/Aproaching_to_the_object.png" alt="Approaching pick-up range" />
+                </div>
+              </div>
+
+              {/* Step 4 */}
+              <div className="workflow-step">
+                <div className="workflow-text">
+                  <h3>4. Claw Picking Up Object</h3>
+                  <p>
+                    The robotic arm executes a precision-controlled pick-and-place maneuver,
+                    gripping the target securely before transporting it back to the start location.
+                  </p>
+                </div>
+                <div className="workflow-img">
+                  <img src="/Object_picking_up.png" alt="Claw picking up object" />
+                </div>
+              </div>
+
+              {/* Step 5 */}
+              <div className="workflow-step">
+                <div className="workflow-text">
+                  <h3>5. Claw Picked the Object</h3>
+                  <p>
+                    After successfully gripping the object, TARS lifts it securely,
+                    preparing for transportation back to the starting point.
+                  </p>
+                </div>
+                <div className="workflow-img">
+                  <img src="/Object_picked_up.png" alt="Object picked up" />
+                </div>
+              </div>
+            </div>
+
+            {/* Demo Video */}
+            <div className="workflow-video">
+              <h3>Demonstration Video</h3>
+              <video
+                controls
+                autoPlay
+                muted
+                loop
+                playsInline
+                width="100%"
+                poster="/workflow/video-thumbnail.jpg"
+              >
+                <source src="/robot_ui_video.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
             </div>
           </div>
         </section>
@@ -204,7 +296,7 @@ export default function TARSWebsite() {
               <div className="card">
                 <h3 className="card-title">Authors</h3>
                 <ul className="card-list">
-                  <li className="team-item">A. Muhammad Muntasir Adnan Jami</li>
+                  <li className="team-item">Abdullah Muhammad Muntasir Adnan Jami</li>
                   <li className="team-item">Mahbub Mokaddes Akash</li>
                   <li className="team-item">Hasan Bin Omar</li>
                   <li className="team-item">Abrar Ur Alam</li>
@@ -229,6 +321,6 @@ export default function TARSWebsite() {
           <p>Smart Transport and Retrieval System with Robotic Arm and Vision Based Object Detection</p>
         </div>
       </footer>
-    </div>
+        </div>
   );
 }
